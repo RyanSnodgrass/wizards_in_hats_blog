@@ -1,8 +1,7 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
-date:   2021-11-18 17:16:25 -0500
-categories: jekyll update
+title:  "Multiple Secrets in Dockerfile"
+categories: docker secrets
 ---
 # Passing Multiple Secrets to Docker Build Process
 Say you're developing a gem that depends on another gem privately hosted in Github Packages. You need to install this private gem during the image build phase of Docker:
