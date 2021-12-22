@@ -1,15 +1,16 @@
 ---
 layout: post
-title:  "Multiple Secrets in Dockerfile"
+title:  "Pass Multiple Secrets into a Dockerfile"
 categories: docker secrets
 ---
-# Passing Multiple Secrets to Docker Build Process
-Say you're developing a gem that depends on another gem privately hosted in Github Packages. You need to install this private gem during the image build phase of Docker:
+![oooh girl!](/assets/images/secrets_image.jpeg)
+
+Say you're developing a gem that depends on another gem hosted in Github Packages. You need to install this private gem during the image build phase of Docker:
 ```
 gem install private_gem:1.0.0 \
 --source https://<USERNAME>:<TOKEN>@rubygems.pkg.github.com/<OWNER>
 ```
-But putting this in the Dockerfile as-is bakes the secrets straight into the source code. That's Super Bad. So how do you pass these values into the build process securely?
+But putting this in the Dockerfile as-is bakes the secrets straight into the source code. That's Super Bad. So how do you securely pass these values into the build process?
 
 ## Single Secrets
 The accepted practice has been with Docker BuildKit since v18.09. If you google for this you'll come across numerous blog posts copying the same tutorial from Docker's documentation.
@@ -53,16 +54,16 @@ docker build \
        --secret id=password,src=password_file.txt \
        .
 ```
-This works, but I think this is a Terrible Idea. For a real world application I would prefer to not have dozens of one-liner secret files cluttering up my filespace and also a docker build command that's a dozen lines long.
+This works, but is also a Terrible Idea. For a real world application I would prefer to not have dozens of one-liner secret files cluttering up my filespace.
 
 ## Multiple Secrets in a Single File
 What we want is a KEY=VALUE file.
 
-Because how these docs and blog posts copy one another, it's easy to miss that what is actually happening is the entire secret file is being mounted.
+Because these docs and blog posts copy one another, it's easy to miss that what is actually happening is the entire secret file is being mounted.
 
 If it is a file, then we can grep out the secrets in the mounted secret file during execution of the run commands. There are [multiple ways to do this](https://stackoverflow.com/a/30776327/4029445), I like to use the `sed` option. The `source` option has too many edge cases like being unable to handle whitespace in the values.
 
-I do wish there was an easier way to do this. Perhaps as untraceable environment variables, but that doesn't exist as far as I know. If the secrets were passed as normal environment variables then they would be baked into the images and exposed upon publishing. This is different than run time environment variables which only exist after the image has been built. Too late for our purposes.
+I wish there was an easier way to do this. Perhaps as untraceable environment variables, but that doesn't exist as far as I know? Passing the secrets as normal `ENV` variables would bake them into the image as well, so that wouldn't work either.
 
 Anyway, let's test this out.
 
@@ -72,7 +73,7 @@ Create a secrets file with a couple of harmless secrets as KEY=VALUE pairs.
 HARMLESS_SECRET=Hello World
 HARMFUL_SECRET=;)
 ```
-Start with something benign as just grabbing and printing to output. The secret will only be present during execution of the RUN command, so shouldn't be exposed upon publication.
+Start with something benign as grabbing and printing to output. The secret will only be present during execution of the RUN command, so shouldn't be exposed upon publication.
 ```docker
 RUN --mount=type=secret,id=secret_file \
     echo $(sed -n 's/^HARMFUL_SECRET=//p' /run/secrets/secret_file)
