@@ -4,9 +4,8 @@ title: About
 permalink: /about/
 ---
 
-Currently employed at the University of Notre Dame. I work primarily as a
-full-stack Ruby on Rails developer with side projects in Python data engineering.
-Sometimes I upgrade Tableau Server, but don't tell anyone.
+I work remotely for [Grio](grio.com), a web dev shop making web apps for clients.
+I focus primarily on Ruby on Rails applications, with a bit of Angular, React, Docker, and AWS thrown in.
 
 In my free time I Forever-DM Dungeons and Dragons with my closest friends, run to stay active, maintain the best lawn on the block, and cheer for Notre Dame Football.
 
