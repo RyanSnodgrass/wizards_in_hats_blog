@@ -42,7 +42,7 @@ mysupersecretpassword
 Mount, then reference each secret in the RUN statement:
 ```docker
 RUN --mount=type=secret,id=username \
-	--mount=type=secret,id=password \
+  	--mount=type=secret,id=password \
     gem install private_gem:1.0.0 \
     --source https://$(cat /run/secrets/username)\
 :$(cat /run/secrets/password)@rubygems.pkg.github.com/<OWNER>
