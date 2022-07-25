@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Pass Multiple Secrets into a Dockerfile"
+title:  "Multiple Secrets in a Docker Build"
 categories: docker secrets
 ---
 ![oooh girl!](/assets/images/secrets_image.jpeg)
@@ -10,7 +10,7 @@ Say you're developing a gem that depends on another gem hosted in Github Package
 gem install private_gem:1.0.0 \
 --source https://<USERNAME>:<TOKEN>@rubygems.pkg.github.com/<OWNER>
 ```
-But putting this in the Dockerfile as-is bakes the secrets straight into the source code. That's Super Bad. So how do you securely pass these values into the build process?
+But putting this in the Dockerfile as-is bakes the secrets straight into the source code. That's Super Bad. So how do you securely pass these several secrets into the build process?
 
 ## Single Secrets
 The accepted practice has been with Docker BuildKit since v18.09. If you google for this you'll come across numerous blog posts copying the same tutorial from Docker's documentation.

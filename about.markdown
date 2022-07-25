@@ -4,6 +4,8 @@ title: About
 permalink: /about/
 ---
 
+Testing Github API
+
 I work remotely for [Grio](grio.com), a web dev shop making web apps for clients.
 I focus primarily on Ruby on Rails applications, with a bit of Angular, React, Docker, and AWS thrown in.
 
