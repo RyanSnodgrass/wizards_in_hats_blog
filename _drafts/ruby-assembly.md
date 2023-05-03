@@ -35,7 +35,7 @@ address is known as "absolute" mode, while the literal hex value is known as
 
 ### Storing Data:
 
-`$2006` and `$2007`, PPUADDR and PPUDATA respectively. 
+`$2006` and `$2007`, PPUADDR and PPUDATA respectively.
 
 PPUDATA stores incrementally. so even without editing `$2006`(PPUADDR) it will
 always increment the memory address.
@@ -55,3 +55,7 @@ outputs the memory address of the `.proc` labels nmi_handler for example.
 Does this mean the .proc methods are stored in a memory address ? like a bank of memory
 for which the bytes are instructed? but how does it know where to go next if it stores
 the function in memory addresses one byte at a time?
+
+## Memory Mapped I/O (MMIO)
+RAM at address `$2000` to `$6000` are reserved for MMIO. Not really memory at all,
+but rather connections to other devices such as the PPU.
